@@ -1,0 +1,18 @@
+include MANIFEST.in
+include requirements.txt
+include *.json
+include *.md
+include *.py
+include *.txt
+recursive-include wallete *.css
+recursive-include wallete *.csv
+recursive-include wallete *.html
+recursive-include wallete *.ico
+recursive-include wallete *.js
+recursive-include wallete *.json
+recursive-include wallete *.md
+recursive-include wallete *.png
+recursive-include wallete *.py
+recursive-include wallete *.svg
+recursive-include wallete *.txt
+recursive-exclude wallete *.pyc
