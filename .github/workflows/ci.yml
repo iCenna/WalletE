@@ -73,10 +73,11 @@ jobs:
       - name: Install
         working-directory: /home/runner/frappe-bench
         run: |
+          bench get-app erpnext https://github.com/frappe/erpnext
           bench get-app wallete $GITHUB_WORKSPACE
           bench setup requirements --dev
           bench new-site --db-root-password root --admin-password admin test_site
-          bench --site test_site install-app wallete
+          bench --site test_site install-app wallete,erpnext
           bench build
         env:
           CI: 'Yes'
