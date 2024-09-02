@@ -16,7 +16,7 @@ class Wallet(Document):
 
 
 @frappe.whitelist()
-def get_customer_wallet(customer, exclude_invoice):
+def get_customer_wallet_balance(customer, exclude_invoice=None):
     try:
         customer_wallet_doc = frappe.get_doc("Wallet", {'customer': customer})
         customer_wallet_amount = get_balance_on(
@@ -25,7 +25,7 @@ def get_customer_wallet(customer, exclude_invoice):
             party=customer_wallet_doc.customer
         )
 
-        pos_invoices = get_customer_open_pos_invoice(
+        pos_invoices = get_customer_open_pos_invoices(
             customer=customer,
             exclude_invoice=exclude_invoice
         )
@@ -45,13 +45,13 @@ def get_wallet_amount_from_payments(payments):
     wallet_amount = 0.0
     for payment in payments:
         payment_doc = frappe.get_doc("Mode of Payment", payment.mode_of_payment)
-        if payment_doc.is_wallet_payment and payment.amount > 0.0:
+        if payment_doc.is_wallet_payment:
             wallet_amount = wallet_amount + payment.amount
 
     return wallet_amount
 
 
-def get_customer_open_pos_invoice(customer, exclude_invoice):
+def get_customer_open_pos_invoices(customer, exclude_invoice=None):
     pos_invoice = DocType("POS Invoice")
     query = (
         frappe.qb.from_(pos_invoice)
@@ -59,10 +59,11 @@ def get_customer_open_pos_invoice(customer, exclude_invoice):
         .where(
             (pos_invoice.docstatus == 1) &
             (IfNull(pos_invoice.consolidated_invoice, "") == "") &
-            (pos_invoice.customer == customer) &
-            (pos_invoice.name != exclude_invoice)
+            (pos_invoice.customer == customer)
         )
     )
+    if exclude_invoice:
+        query = query.where((pos_invoice.name != exclude_invoice))
 
     data = query.run(as_dict=True)
 
