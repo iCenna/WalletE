@@ -33,7 +33,8 @@ sed -i 's/redis_socketio:/# redis_socketio:/g' Procfile
 bench get-app payments --branch develop
 bench get-app erpnext --branch develop
 bench setup requirements --dev
-bench start &
+bench start &>> ~/frappe-bench/bench_start.log &
+CI=Yes bench build --app frappe &
 bench --site test_site reinstall --yes
 
 bench get-app wallete "${GITHUB_WORKSPACE}"
