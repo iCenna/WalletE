@@ -7,6 +7,8 @@ app_description = "WalletE"
 app_email = "abadahhamza@gmail.com"
 app_license = "MIT"
 
+required_apps = ["payments", "erpnext"]
+
 # Includes in <head>
 # ------------------
 
