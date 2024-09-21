@@ -40,5 +40,5 @@ bench --site test_site reinstall --yes
 echo 'after reinstall site'
 
 bench get-app wallete "${GITHUB_WORKSPACE}"
-bench --site test_site install-app wallete
 bench --site test_site execute erpnext.setup.utils.enable_all_roles_and_domains
+bench --site test_site install-app wallete
