@@ -1,10 +1,10 @@
 import frappe
-from erpnext.accounts.doctype.sales_invoice.sales_invoice import SalesInvoice
+from icenna.overrides.py.sales_invoice import CustomSalesInvoice
 from erpnext.accounts.utils import get_account_currency
 from frappe.utils import cint, flt
 
 
-class OverrideSalesInvoice(SalesInvoice):
+class OverrideSalesInvoice(CustomSalesInvoice):
 	def make_pos_gl_entries(self, gl_entries):
 		# ERPNEXT CODE
 		if cint(self.is_pos):
