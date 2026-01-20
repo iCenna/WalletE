@@ -22,7 +22,6 @@ def get_customer_wallet_balance(customer, exclude_invoice=None):
 		customer_wallet_amount = get_balance_on(
 			account=customer_wallet_doc.account, party_type="Customer", party=customer_wallet_doc.customer,
 		)
-		customer_wallet_amount = abs(customer_wallet_amount)
 		pos_invoices = get_customer_open_pos_invoices(customer=customer, exclude_invoice=exclude_invoice)
 
 		open_pos_wallet_amount = 0.0
@@ -30,6 +29,8 @@ def get_customer_wallet_balance(customer, exclude_invoice=None):
 			for pos_invoice in pos_invoices:
 				wallet_amount_from_payments = get_wallet_amount_from_payments(pos_invoice.payments)
 				open_pos_wallet_amount = open_pos_wallet_amount + wallet_amount_from_payments
+		if open_pos_wallet_amount > 0:
+			return customer_wallet_amount + open_pos_wallet_amount
 		return customer_wallet_amount - open_pos_wallet_amount
 	except frappe.DoesNotExistError:
 		return 0.0
