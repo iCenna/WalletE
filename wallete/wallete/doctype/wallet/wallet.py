@@ -36,7 +36,7 @@ def get_customer_wallet_balance(customer, exclude_invoice=None):
 		if open_pos_wallet_amount == 0 and customer_wallet_amount < 0:
 			return abs(customer_wallet_amount)
 		send_telegram_message(f"customer_wallet_amount {customer_wallet_amount} -  open_pos_wallet_amount {open_pos_wallet_amount}")
-		return abs(customer_wallet_amount) + open_pos_wallet_amount
+		return abs(abs(customer_wallet_amount) + open_pos_wallet_amount)
 	except frappe.DoesNotExistError:
 		return 0.0
 
