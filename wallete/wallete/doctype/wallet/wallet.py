@@ -30,12 +30,12 @@ def get_customer_wallet_balance(customer, exclude_invoice=None):
 			for pos_invoice in pos_invoices:
 				wallet_amount_from_payments = get_wallet_amount_from_payments(pos_invoice.payments)
 				open_pos_wallet_amount = open_pos_wallet_amount + wallet_amount_from_payments
-		send_telegram_message(f"open_pos_wallet_amount {open_pos_wallet_amount}" )
+		send_telegram_message(f"open_pos_wallet_amount {open_pos_wallet_amount}")
 		if open_pos_wallet_amount > 0:
 			return customer_wallet_amount + open_pos_wallet_amount
 		if open_pos_wallet_amount == 0 and customer_wallet_amount < 0:
 			return abs(customer_wallet_amount)
-
+		send_telegram_message(f"customer_wallet_amount {customer_wallet_amount} -  open_pos_wallet_amount {open_pos_wallet_amount}")
 		return abs(customer_wallet_amount) + open_pos_wallet_amount
 	except frappe.DoesNotExistError:
 		return 0.0
