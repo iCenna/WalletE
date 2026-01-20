@@ -30,7 +30,8 @@ def get_customer_wallet_balance(customer, exclude_invoice=None):
 			for pos_invoice in pos_invoices:
 				wallet_amount_from_payments = get_wallet_amount_from_payments(pos_invoice.payments)
 				open_pos_wallet_amount = open_pos_wallet_amount + wallet_amount_from_payments
-
+		from icenna.utils.telegram import send_telegram_message
+		send_telegram_message(f"customer_wallet_amount : {customer_wallet_amount} , open_pos_wallet_amount {open_pos_wallet_amount}")
 		return customer_wallet_amount - open_pos_wallet_amount
 	except frappe.DoesNotExistError:
 		return 0.0
