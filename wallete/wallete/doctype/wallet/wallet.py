@@ -35,9 +35,8 @@ def get_customer_wallet_balance(customer, exclude_invoice=None):
 			return customer_wallet_amount + open_pos_wallet_amount
 		if open_pos_wallet_amount == 0 and customer_wallet_amount < 0:
 			return abs(customer_wallet_amount)
-		# if open_pos_wallet_amount < 0:
-		# 	return abs(open_pos_wallet_amount)
-		return customer_wallet_amount - open_pos_wallet_amount
+
+		return abs(customer_wallet_amount) + open_pos_wallet_amount
 	except frappe.DoesNotExistError:
 		return 0.0
 
