@@ -23,7 +23,7 @@ def get_customer_wallet_balance(customer, exclude_invoice=None):
 			account=customer_wallet_doc.account, party_type="Customer", party=customer_wallet_doc.customer,
 		)
 		pos_invoices = get_customer_open_pos_invoices(customer=customer, exclude_invoice=exclude_invoice)
-		# from icenna.utils.telegram import send_telegram_message
+		from icenna.utils.telegram import send_telegram_message
 
 		open_pos_wallet_amount = 0.0
 		if len(pos_invoices) != 0:
@@ -35,7 +35,7 @@ def get_customer_wallet_balance(customer, exclude_invoice=None):
 			return customer_wallet_amount + open_pos_wallet_amount
 		if open_pos_wallet_amount == 0 and customer_wallet_amount < 0:
 			return abs(customer_wallet_amount)
-		# send_telegram_message(f"customer_wallet_amount {customer_wallet_amount} -  open_pos_wallet_amount {open_pos_wallet_amount}")
+		send_telegram_message(f"customer_wallet_amount {customer_wallet_amount} -  open_pos_wallet_amount {open_pos_wallet_amount}")
 		return abs(-(customer_wallet_amount + open_pos_wallet_amount))
 		# return customer_wallet_amount - open_pos_wallet_amount
 	except frappe.DoesNotExistError:
