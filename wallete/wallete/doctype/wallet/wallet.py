@@ -21,7 +21,7 @@ def get_customer_wallet_balance(customer, exclude_invoice=None):
 		customer_wallet_doc = frappe.get_doc("Wallet", {"customer": customer})
 		customer_wallet_amount = get_balance_on(
 			account=customer_wallet_doc.account, party_type="Customer", party=customer_wallet_doc.customer,
-		)
+		ignore_account_permission=True)
 		pos_invoices = get_customer_open_pos_invoices(customer=customer, exclude_invoice=exclude_invoice)
 		# from icenna.utils.telegram import send_telegram_message
 
