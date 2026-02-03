@@ -10,5 +10,5 @@ use_parentheses = true
 ensure_newline_before_comments = true
 indent = "	"
 
-dependencies = [
-]
+[tool.bench.frappe-dependencies]
+frappe = ">=14.0.0"
